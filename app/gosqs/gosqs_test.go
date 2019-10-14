@@ -1116,6 +1116,13 @@ func TestReceiveMessage_WithConcurrentDeleteQueue(t *testing.T) {
 			t.Errorf("handler returned wrong status code: got \n%v want %v",
 				status, http.StatusOK)
 		}
+
+		// Check the response body is what we expect.
+		expected := "DeleteQueueResponse"
+		if !strings.Contains(rr.Body.String(), expected) {
+			t.Errorf("handler returned unexpected body: got %v want %v",
+				rr.Body.String(), expected)
+		}
 	}()
 
 	c := make(chan struct{})
